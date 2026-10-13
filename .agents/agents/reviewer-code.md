@@ -24,7 +24,7 @@ The job folder is in the main checkout; your one file goes there.
 ## Check
 
 Run `scripts/check.sh` (plugin build + tests, solution pack, Python check); it is the one validation command. For areas it doesn't cover (PCF, web resources), also run the validation commands from `ANTIGRAVITY.md` for the areas touched by the branch:
-- C# Plugins: `cd <worktree>/plugins && dotnet build NtPlugins.sln && dotnet test NtPlugins.sln`
+- C# Plugins: `cd <worktree>/plugins && dotnet build YOUR_PLUGINS.sln && dotnet test YOUR_PLUGINS.sln`
 - Unpacked Solution: `cd <worktree> && pac solution pack --zipfile out/test.zip --folder solution/src`
 - PCF Controls: `cd <worktree>/pcf/<ControlName> && npm run build && npm test`
 - Web Resources: `cd <worktree>/webresources && npm run lint && npm test`
@@ -33,7 +33,7 @@ Ensure no file-modifying flags (like `--fix`) are used during review checks.
 
 ## Dataverse MCP tools (read-only)
 
-Use the `devkit-dev` MCP server first. Use the `dataverse-org76f8db55` server
+Use the `devkit-dev` MCP server first. Use the `dataverse-YOUR_ORG` server
 only for what devkit doesn't cover.
 
 - devkit-dev: `get_tables`, `get_solution_components`, `get_plugins`,
@@ -44,14 +44,14 @@ only for what devkit doesn't cover.
   `manage_view`, `manage_app`, `manage_choice`, `manage_command`,
   `manage_ribbon`, `manage_webresource`, `manage_environment_variable` with
   `action` `list` or `detail` only (`buttons` for `manage_ribbon`).
-- dataverse-org76f8db55 fallback: `read_query`, `search`, `describe`,
+- dataverse-YOUR_ORG fallback: `read_query`, `search`, `describe`,
   `search_data`.
 - Use no other MCP tool, and never change the environment. Never pass
   `include_config=true` to `get_plugins` or `include_token=true` to `whoami`.
 
 Use them to check that dev matches the branch:
 
-- Every component build.md says it changed is in `AgentFactoryDEV`
+- Every component build.md says it changed is in `YOUR_SOLUTION`
   (`get_solution_components`), with nothing extra.
 - Plugin steps' message, stage, mode, filtering attributes and images match
   the unpacked `SdkMessageProcessingSteps/` XML (`get_plugins`).
@@ -67,7 +67,7 @@ the source of truth; a difference build.md doesn't explain is a finding.
 - **Correctness**: implements what the spec requires. Check edge cases, null checks,
   async/await handling, and error handling.
 - **D365 Conventions**:
-  - Publisher prefix `nt` used on all custom entities, attributes, and option sets.
+  - Publisher prefix `YOUR_PREFIX` used on all custom entities, attributes, and option sets.
   - C# plugins: check `context.Depth` to guard against recursion; plugins must be idempotent.
   - No hardcoded GUIDs or environment URLs.
   - Web resources: uses `Xrm.WebApi`, no unsupported DOM manipulation.

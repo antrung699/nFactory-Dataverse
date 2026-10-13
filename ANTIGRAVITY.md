@@ -8,8 +8,8 @@ Customizations for Dynamics 365 Customer Engagement (Dataverse), developed and m
 
 | Area | Path | Build / Test Commands |
 |---|---|---|
-| **Solution** (tables, forms, views, business rules, apps) | `solution/src/` (unpacked) | `pac solution pack --zipfile out/AgentFactoryDEV.zip --folder solution/src` |
-| **C# Plugins** | `plugins/NtPlugins.sln`<br>• `plugins/NtPlugins/` (plugin)<br>• `plugins/NtPlugins.Tests/` (xUnit) | `cd plugins && dotnet build NtPlugins.sln`<br>`cd plugins && dotnet test NtPlugins.sln` |
+| **Solution** (tables, forms, views, business rules, apps) | `solution/src/` (unpacked) | `pac solution pack --zipfile out/YOUR_SOLUTION.zip --folder solution/src` |
+| **C# Plugins** | `plugins/YOUR_PLUGINS.sln`<br>• `plugins/YOUR_PLUGINS/` (plugin)<br>• `plugins/YOUR_PLUGINS.Tests/` (xUnit) | `cd plugins && dotnet build YOUR_PLUGINS.sln`<br>`cd plugins && dotnet test YOUR_PLUGINS.sln` |
 | **PCF Controls** | `pcf/<ControlName>/` | `npm ci`, `npm run build`, `npm test` |
 | **Web Resources** (JS / HTML) | `webresources/` | `npm run lint`, `npm test` |
 | **Power Automate Flows** | `solution/src/Workflows/` | Edited as unpacked solution files |
@@ -29,9 +29,9 @@ Run the `factory-connect` skill (`.agents/skills/factory-connect/`) to set up a 
 
 ## 3. Environments & Boundaries
 
-- **Dev Environment URL**: `https://org76f8db55.crm5.dynamics.com`
-- **Solution Name**: `AgentFactoryDEV` (Display name: "Agent Factory DEV")
-- **Publisher Prefix**: `nt` (use on all new schema names, entities, and attributes).
+- **Dev Environment URL**: `https://YOUR_ORG.crm5.dynamics.com`
+- **Solution Name**: `YOUR_SOLUTION` (Display name: "Your Solution Display Name")
+- **Publisher Prefix**: `YOUR_PREFIX` (use on all new schema names, entities, and attributes).
 - **Environment Boundary**:
   - **Agents touch the DEV environment only.**
   - Test and production deployments are **strictly human-only**.
@@ -44,8 +44,8 @@ Run the `factory-connect` skill (`.agents/skills/factory-connect/`) to set up a 
 - **Source of truth is the unpacked solution in git** (`solution/src/`). Never hand-edit a packed `.zip`.
 - **Syncing from Dev**:
   ```sh
-  pac solution export --name AgentFactoryDEV --path out/ --managed false
-  pac solution unpack --zipfile out/AgentFactoryDEV.zip --folder solution/src
+  pac solution export --name YOUR_SOLUTION --path out/ --managed false
+  pac solution unpack --zipfile out/YOUR_SOLUTION.zip --folder solution/src
   ```
   Review the diff carefully; keep it minimal and eliminate unrelated churn from re-export.
 - `pac` is the **only** mechanism through which solution changes reach git or other environments.
@@ -57,7 +57,7 @@ Run the `factory-connect` skill (`.agents/skills/factory-connect/`) to set up a 
 
 ### Dataverse MCP Servers (order of use)
 1. **`devkit-dev`** (DynamicsCrm.DevKit, `devkit mcp devkit-dev`): use first for everything it covers (tables, columns, relationships, choices, forms, views, apps, commands, ribbons, web resources, environment variables, publish, records, FetchXML, plugin/flow/workflow inspection, trace logs, system jobs, audit).
-2. **`dataverse-org76f8db55`** (`@microsoft/dataverse mcp`): fallback only for what devkit lacks (Dataverse SQL `read_query`, schema/Custom API keyword `search`/`describe`, `search_data`, file columns, `invoke_api` for Custom APIs).
+2. **`dataverse-YOUR_ORG`** (`@microsoft/dataverse mcp`): fallback only for what devkit lacks (Dataverse SQL `read_query`, schema/Custom API keyword `search`/`describe`, `search_data`, file columns, `invoke_api` for Custom APIs).
 3. `dv-*` skills: last.
 - Both servers point at dev. **Human-only**: devkit `manage_role` and `execute_webapi`; dataverse `delete_table` and the skill tools (`upsert_skill`, `create_skill_resource`, `delete_skill`).
 - Never pass `include_config=true` to `get_plugins` or `include_token=true` to `whoami`.
@@ -71,14 +71,14 @@ Run the `factory-connect` skill (`.agents/skills/factory-connect/`) to set up a 
 - **Plugin Registration in Dev (macOS)**:
   - Since the Plugin Registration Tool is unavailable on macOS, build with the .NET 8 SDK:
     ```sh
-    dotnet build plugins/NtPlugins/NtPlugins.csproj -c Release
+    dotnet build plugins/YOUR_PLUGINS/YOUR_PLUGINS.csproj -c Release
     ```
-  - First registration runs through the Web API (`dataverse api request` or `scripts/auth.py`) with header `MSCRM.SolutionUniqueName: AgentFactoryDEV`:
-    1. `POST pluginassemblies` (`content` = base64 of `NtPlugins.dll`, `isolationmode` 2, `sourcetype` 0)
+  - First registration runs through the Web API (`dataverse api request` or `scripts/auth.py`) with header `MSCRM.SolutionUniqueName: YOUR_SOLUTION`:
+    1. `POST pluginassemblies` (`content` = base64 of `YOUR_PLUGINS.dll`, `isolationmode` 2, `sourcetype` 0)
     2. `POST plugintypes` bound to the assembly
     3. `POST sdkmessageprocessingsteps` (`stage`, `mode`, `asyncautodelete`, `sdkmessageid`, `sdkmessagefilterid`, `eventhandler_plugintype`)
     4. Step images: `POST sdkmessageprocessingstepimages` (`name`, `entityalias`, `imagetype` 0 pre / 1 post, `messagepropertyname` `Target`, `attributes`, bound `sdkmessageprocessingstepid`)
-  - Pushing a rebuilt dll to the already registered assembly: `PATCH pluginassemblies(<id>)` with body `{"content": "<base64 of NtPlugins.dll>"}` (same header, keep version 1.0.0.0), then `POST plugintypes` for any new class. `dataverse api request` wants a relative path without a leading slash (`--path "api/data/v9.2/..."`).
+  - Pushing a rebuilt dll to the already registered assembly: `PATCH pluginassemblies(<id>)` with body `{"content": "<base64 of YOUR_PLUGINS.dll>"}` (same header, keep version 1.0.0.0), then `POST plugintypes` for any new class. `dataverse api request` wants a relative path without a leading slash (`--path "api/data/v9.2/..."`).
   - After registration, export and unpack the solution:
     - Assembly lands in `solution/src/PluginAssemblies/`
     - Step lands in `solution/src/SdkMessageProcessingSteps/`
@@ -118,7 +118,7 @@ When operating as Antigravity in this repository:
 2. **Subagents & Delegation**:
    - When running multi-stage factory workflows (e.g. `spec-writer`, `builder`, `reviewer-code`, `reviewer-security`, `reviewer-ux`, `reviewer-ui`, `approver`, `retro`), use `invoke_subagent` to orchestrate parallel tasks cleanly.
 3. **MCP Tooling**:
-   - MCP servers for Antigravity are configured in `~/.gemini/config/mcp_config.json`, linked from `~/.gemini/antigravity/mcp_config.json` (Claude Code uses `.mcp.json`): `devkit-dev` first, `dataverse-org76f8db55` as fallback. See "Dataverse MCP Servers" above.
+   - MCP servers for Antigravity are configured in `~/.gemini/config/mcp_config.json`, linked from `~/.gemini/antigravity/mcp_config.json` (Claude Code uses `.mcp.json`): `devkit-dev` first, `dataverse-YOUR_ORG` as fallback. See "Dataverse MCP Servers" above.
 4. **Safety & Verification**:
    - Always run `dotnet test` or relevant test suites after modifying code.
    - Never push directly to `main` without testing and review.

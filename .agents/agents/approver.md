@@ -30,11 +30,11 @@ The job folder is in the main checkout; your one file goes there.
 - All four reviews in the final round are `VERDICT: PASS`, and no Note describes a real problem.
 - `cd <worktree> && git merge-tree --write-tree main <branch>` reports no conflicts.
 - Dev matches the branch: devkit-dev `get_solution_components` for
-  `AgentFactoryDEV` shows no component the branch's unpacked solution lacks.
+  `YOUR_SOLUTION` shows no component the branch's unpacked solution lacks.
 
 For these checks use the `devkit-dev` MCP server's read tools (`get_*`,
 `execute_fetchxml`, and `manage_*` with `action` `list` or `detail` only),
-and the `dataverse-org76f8db55` server's `read_query`, `search` and `describe`
+and the `dataverse-YOUR_ORG` server's `read_query`, `search` and `describe`
 only for what devkit doesn't cover. Never change the environment, and never
 pass `include_config=true` to `get_plugins` or `include_token=true` to `whoami`.
 
@@ -56,7 +56,7 @@ Always **ESCALATE** when the change:
   `execute_webapi`, or dataverse `delete_table` or skill tools.
 - Has schema changes in dev (`get_solution_components`) that are missing from
   the exported solution diff.
-- Modifies solution publisher prefix (`nt`), managed properties, or solution dependencies.
+- Modifies solution publisher prefix (`YOUR_PREFIX`), managed properties, or solution dependencies.
 
 ## Write decision.md
 

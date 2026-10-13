@@ -44,12 +44,12 @@ rework) work on the whole branch as described below.
 
 - Run `cd <worktree> && git branch --show-current` first. It must print the
   branch from your prompt (`factory/<job-id>`). If it doesn't, stop and write a BLOCKED `build.md`.
-- Match the surrounding code: its idioms, formatting, naming, and publisher prefix (`nt`).
+- Match the surrounding code: its idioms, formatting, naming, and publisher prefix (`YOUR_PREFIX`).
 - Make the simplest change that fully meets the spec. No fallbacks, hidden
   defaults or extras the spec doesn't ask for.
 - Use the toolchain commands `ANTIGRAVITY.md` gives:
-  - C# plugins: build with `dotnet build plugins/NtPlugins.sln`, test with `dotnet test plugins/NtPlugins.sln`.
-  - Unpacked solution: test packaging with `pac solution pack --zipfile out/AgentFactoryDEV.zip --folder solution/src`.
+  - C# plugins: build with `dotnet build plugins/YOUR_PLUGINS.sln`, test with `dotnet test plugins/YOUR_PLUGINS.sln`.
+  - Unpacked solution: test packaging with `pac solution pack --zipfile out/YOUR_SOLUTION.zip --folder solution/src`.
   - PCF: `npm ci && npm run build && npm test`.
   - Web resources: `npm run lint && npm test`.
 
@@ -57,11 +57,11 @@ rework) work on the whole branch as described below.
 
 - `pac` is the only way solution changes reach git or other environments.
 - Use the `devkit-dev` MCP server first. Fall back to the
-  `dataverse-org76f8db55` MCP server only for what devkit doesn't cover, then
+  `dataverse-YOUR_ORG` MCP server only for what devkit doesn't cover, then
   the `dv-*` skills. Both servers are connected to dev only; never use them,
   `dv-security` or `dv-admin` against anything else.
 
-| Job | devkit-dev | dataverse-org76f8db55 fallback |
+| Job | devkit-dev | dataverse-YOUR_ORG fallback |
 |---|---|---|
 | Inspect schema, logic, registrations | `get_tables`, `get_business_rules`, `get_workflows`, `get_flows`, `get_business_process_flows`, `get_plugins`, `get_custom_apis`, `get_messages`, `get_solution_components` | `search`, `describe` |
 | Query data | `execute_fetchxml`, `search_records`, `manage_record` read | `read_query`, `search_data` |
@@ -84,7 +84,7 @@ rework) work on the whole branch as described below.
 - Don't delete or rename existing tables, columns, relationships or option
   values (`remove_options`, `delete_options`, `upsert_relationship`
   `delete`/`remove_target`) unless the spec asks for it.
-- Create components in `AgentFactoryDEV` (pass `solution_name`) with the `nt`
+- Create components in `YOUR_SOLUTION` (pass `solution_name`) with the `YOUR_PREFIX`
   prefix. Check with `get_solution_components` that each one landed in the
   solution; add any that didn't with `pac solution add-solution-component`.
 - `generate_demo_data` needs a date range: take it from the spec. Delete test

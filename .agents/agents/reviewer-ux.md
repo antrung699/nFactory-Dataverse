@@ -37,7 +37,7 @@ There is usually no standalone web app to open. Judge from the solution XML and 
 
 ## Dataverse MCP tools (read-only)
 
-Use the `devkit-dev` MCP server first. Use the `dataverse-org76f8db55` server
+Use the `devkit-dev` MCP server first. Use the `dataverse-YOUR_ORG` server
 only for what devkit doesn't cover.
 
 - devkit-dev: `get_tables`, `get_solution_components`, `get_business_rules`,
@@ -46,7 +46,7 @@ only for what devkit doesn't cover.
   and `manage_form`, `manage_view`, `manage_app`, `manage_choice`,
   `manage_command`, `manage_ribbon` with `action` `list` or `detail` only
   (`buttons` for `manage_ribbon`).
-- dataverse-org76f8db55 fallback: `read_query`, `search`, `describe`.
+- dataverse-YOUR_ORG fallback: `read_query`, `search`, `describe`.
 - Use no other MCP tool, and never change the environment. Never pass
   `include_token=true` to `whoami`.
 

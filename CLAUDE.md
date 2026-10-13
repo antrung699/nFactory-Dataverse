@@ -8,7 +8,7 @@ the software factory in `.claude/agents` and `/factory`.
 | Area | Path | Build / test |
 |---|---|---|
 | Solution (tables, forms, views, business rules, apps) | `solution/src/` (unpacked) | `pac solution pack` |
-| C# plugins | `plugins/NtPlugins.sln` (`NtPlugins/` plugin, `NtPlugins.Tests/` xUnit) | `cd plugins && dotnet build NtPlugins.sln`, `cd plugins && dotnet test NtPlugins.sln` |
+| C# plugins | `plugins/YOUR_PLUGINS.sln` (`YOUR_PLUGINS/` plugin, `YOUR_PLUGINS.Tests/` xUnit) | `cd plugins && dotnet build YOUR_PLUGINS.sln`, `cd plugins && dotnet test YOUR_PLUGINS.sln` |
 | PCF controls | `pcf/<ControlName>/` | `npm ci`, `npm run build`, `npm test` |
 | Web resources (JS/HTML) | `webresources/` | `npm run lint`, `npm test` |
 | Power Automate flows | `solution/src/Workflows/` | Edited as unpacked solution files |
@@ -27,8 +27,12 @@ Install details per OS: `.claude/skills/factory-connect/references/`.
 
 ## Environments
 
-- Dev environment URL: `https://org76f8db55.crm5.dynamics.com`
-- Solution: `AgentFactoryDEV` (display name "Agent Factory DEV")
+If any value below still reads `YOUR_...`, the project is not configured yet: stop and tell the
+user to install and validate the tools, then run `/factory-connect` (see `docs/SETUP.md`). Do not
+guess values.
+
+- Dev environment URL: `https://YOUR_ORG.crm5.dynamics.com`
+- Solution: `YOUR_SOLUTION` (display name "Your Solution Display Name")
 - Only the dev environment is touched by agents. Test/prod deploys are human-only.
 
 ## Conventions
@@ -43,26 +47,26 @@ Install details per OS: `.claude/skills/factory-connect/references/`.
   and unpacked so it shows up as a git diff. `dv-security`, `dv-admin` and any
   write outside dev are human-only.
 - MCP order: devkit-dev (`mcp__devkit-dev__*`) first, the Dataverse MCP
-  (`mcp__dataverse-org76f8db55__*`) only for what devkit lacks (Dataverse SQL,
+  (`mcp__dataverse-YOUR_ORG__*`) only for what devkit lacks (Dataverse SQL,
   schema keyword search, file columns, invoking Custom APIs), then the `dv-*`
   skills. Both servers point at dev. Human-only: devkit `manage_role` and
   `execute_webapi`, Dataverse MCP `delete_table` and skill tools. Each factory
   agent's `tools:` list in `.claude/agents/` is its allowlist; read-only agents
   call `manage_*` tools with `list`/`detail` only.
-- Use the publisher prefix on all new schema names (`nt` prefix).
+- Use the publisher prefix on all new schema names (`YOUR_PREFIX` prefix).
 - Plugins: register steps with explicit stage, mode and filtering attributes;
   keep them idempotent and avoid recursion (check `Depth`); no hard-coded GUIDs or URLs.
 - Plugin registration in dev (no Plugin Registration Tool on macOS): build with the
-  .NET 8 SDK, e.g. `dotnet build plugins/NtPlugins/NtPlugins.csproj -c Release`.
+  .NET 8 SDK, e.g. `dotnet build plugins/YOUR_PLUGINS/YOUR_PLUGINS.csproj -c Release`.
   First registration goes through the Web API (`dataverse api request`) with header
-  `MSCRM.SolutionUniqueName: AgentFactoryDEV`: POST `pluginassemblies` (`content` =
-  base64 of `NtPlugins.dll`, `isolationmode` 2, `sourcetype` 0), POST `plugintypes`
+  `MSCRM.SolutionUniqueName: YOUR_SOLUTION`: POST `pluginassemblies` (`content` =
+  base64 of `YOUR_PLUGINS.dll`, `isolationmode` 2, `sourcetype` 0), POST `plugintypes`
   bound to the assembly, then POST `sdkmessageprocessingsteps` (stage, mode,
   `asyncautodelete`, `sdkmessageid`, `sdkmessagefilterid`, `eventhandler_plugintype`).
   Step images: POST `sdkmessageprocessingstepimages` (`name`, `entityalias`, `imagetype`
   0 pre / 1 post, `messagepropertyname` `Target`, `attributes`, bound
   `sdkmessageprocessingstepid`). A rebuilt dll goes to the already registered assembly
-  with PATCH `pluginassemblies(<id>)` body `{"content": "<base64 of NtPlugins.dll>"}`
+  with PATCH `pluginassemblies(<id>)` body `{"content": "<base64 of YOUR_PLUGINS.dll>"}`
   (same header, keep version 1.0.0.0); then POST any new `plugintypes`. The CLI wants a
   relative path without a leading slash (`--path "api/data/v9.2/..."`). Then export and
   unpack the solution; the assembly lands in `solution/src/PluginAssemblies/` and

@@ -1,7 +1,7 @@
 ---
 name: builder
 description: Factory step 2. Implements a job's spec on its factory/<job-id> branch, tests it against the acceptance criteria, commits, and writes build.md. Resumed with SendMessage after each review round.
-tools: Read, Grep, Glob, Bash, Edit, Write, mcp__devkit-dev__get_tables, mcp__devkit-dev__get_solution_components, mcp__devkit-dev__get_plugins, mcp__devkit-dev__get_plugin_trace_logs, mcp__devkit-dev__get_system_jobs, mcp__devkit-dev__get_business_rules, mcp__devkit-dev__get_workflows, mcp__devkit-dev__get_flows, mcp__devkit-dev__get_business_process_flows, mcp__devkit-dev__get_custom_apis, mcp__devkit-dev__get_messages, mcp__devkit-dev__get_audit_history, mcp__devkit-dev__execute_fetchxml, mcp__devkit-dev__search_records, mcp__devkit-dev__parse_record_url, mcp__devkit-dev__whoami, mcp__devkit-dev__manage_form, mcp__devkit-dev__manage_view, mcp__devkit-dev__manage_app, mcp__devkit-dev__manage_choice, mcp__devkit-dev__manage_command, mcp__devkit-dev__manage_ribbon, mcp__devkit-dev__manage_webresource, mcp__devkit-dev__manage_environment_variable, mcp__devkit-dev__upsert_table, mcp__devkit-dev__upsert_column, mcp__devkit-dev__upsert_relationship, mcp__devkit-dev__publish_customizations, mcp__devkit-dev__manage_record, mcp__devkit-dev__create_records, mcp__devkit-dev__generate_demo_data, mcp__dataverse-org76f8db55__read_query, mcp__dataverse-org76f8db55__search, mcp__dataverse-org76f8db55__describe, mcp__dataverse-org76f8db55__search_data, mcp__dataverse-org76f8db55__file_download, mcp__dataverse-org76f8db55__invoke_api, mcp__dataverse-org76f8db55__create_table, mcp__dataverse-org76f8db55__update_table, mcp__dataverse-org76f8db55__create_record, mcp__dataverse-org76f8db55__update_record, mcp__dataverse-org76f8db55__init_file_upload, mcp__dataverse-org76f8db55__commit_file_upload
+tools: Read, Grep, Glob, Bash, Edit, Write, mcp__devkit-dev__get_tables, mcp__devkit-dev__get_solution_components, mcp__devkit-dev__get_plugins, mcp__devkit-dev__get_plugin_trace_logs, mcp__devkit-dev__get_system_jobs, mcp__devkit-dev__get_business_rules, mcp__devkit-dev__get_workflows, mcp__devkit-dev__get_flows, mcp__devkit-dev__get_business_process_flows, mcp__devkit-dev__get_custom_apis, mcp__devkit-dev__get_messages, mcp__devkit-dev__get_audit_history, mcp__devkit-dev__execute_fetchxml, mcp__devkit-dev__search_records, mcp__devkit-dev__parse_record_url, mcp__devkit-dev__whoami, mcp__devkit-dev__manage_form, mcp__devkit-dev__manage_view, mcp__devkit-dev__manage_app, mcp__devkit-dev__manage_choice, mcp__devkit-dev__manage_command, mcp__devkit-dev__manage_ribbon, mcp__devkit-dev__manage_webresource, mcp__devkit-dev__manage_environment_variable, mcp__devkit-dev__upsert_table, mcp__devkit-dev__upsert_column, mcp__devkit-dev__upsert_relationship, mcp__devkit-dev__publish_customizations, mcp__devkit-dev__manage_record, mcp__devkit-dev__create_records, mcp__devkit-dev__generate_demo_data, mcp__dataverse-YOUR_ORG__read_query, mcp__dataverse-YOUR_ORG__search, mcp__dataverse-YOUR_ORG__describe, mcp__dataverse-YOUR_ORG__search_data, mcp__dataverse-YOUR_ORG__file_download, mcp__dataverse-YOUR_ORG__invoke_api, mcp__dataverse-YOUR_ORG__create_table, mcp__dataverse-YOUR_ORG__update_table, mcp__dataverse-YOUR_ORG__create_record, mcp__dataverse-YOUR_ORG__update_record, mcp__dataverse-YOUR_ORG__init_file_upload, mcp__dataverse-YOUR_ORG__commit_file_upload
 model: opus
 ---
 
@@ -57,7 +57,7 @@ rework) work on the whole branch as described below.
 
 - `pac` is the only way solution changes reach git or other environments.
 - Use devkit-dev (`mcp__devkit-dev__*`) first. Fall back to the Dataverse MCP
-  (`mcp__dataverse-org76f8db55__*`) only for what devkit doesn't cover, then
+  (`mcp__dataverse-YOUR_ORG__*`) only for what devkit doesn't cover, then
   the `dv-*` skills. Both servers are connected to dev only; never use them,
   `dv-security` or `dv-admin` against anything else.
 
@@ -84,7 +84,7 @@ rework) work on the whole branch as described below.
 - Don't delete or rename existing tables, columns, relationships or option
   values (`remove_options`, `delete_options`, `upsert_relationship`
   `delete`/`remove_target`) unless the spec asks for it.
-- Create components in `AgentFactoryDEV` (pass `solution_name`) with the `nt`
+- Create components in `YOUR_SOLUTION` (pass `solution_name`) with the `YOUR_PREFIX`
   prefix. Check with `get_solution_components` that each one landed in the
   solution; add any that didn't with `pac solution add-solution-component`.
 - `generate_demo_data` needs a date range: take it from the spec. Delete test

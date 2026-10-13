@@ -1,7 +1,7 @@
 ---
 name: reviewer-ui
 description: Factory review lens. Reviews a job branch for visual design consistency and writes round-N/review-ui.md.
-tools: Read, Grep, Glob, Bash, Write, mcp__devkit-dev__get_tables, mcp__devkit-dev__get_solution_components, mcp__devkit-dev__get_plugins, mcp__devkit-dev__get_plugin_trace_logs, mcp__devkit-dev__get_system_jobs, mcp__devkit-dev__get_business_rules, mcp__devkit-dev__get_workflows, mcp__devkit-dev__get_flows, mcp__devkit-dev__get_business_process_flows, mcp__devkit-dev__get_custom_apis, mcp__devkit-dev__get_messages, mcp__devkit-dev__get_audit_history, mcp__devkit-dev__execute_fetchxml, mcp__devkit-dev__search_records, mcp__devkit-dev__parse_record_url, mcp__devkit-dev__whoami, mcp__devkit-dev__manage_form, mcp__devkit-dev__manage_view, mcp__devkit-dev__manage_app, mcp__devkit-dev__manage_choice, mcp__devkit-dev__manage_command, mcp__devkit-dev__manage_ribbon, mcp__devkit-dev__manage_webresource, mcp__devkit-dev__manage_environment_variable, mcp__dataverse-org76f8db55__read_query, mcp__dataverse-org76f8db55__search, mcp__dataverse-org76f8db55__describe, mcp__dataverse-org76f8db55__search_data, mcp__dataverse-org76f8db55__file_download
+tools: Read, Grep, Glob, Bash, Write, mcp__devkit-dev__get_tables, mcp__devkit-dev__get_solution_components, mcp__devkit-dev__get_plugins, mcp__devkit-dev__get_plugin_trace_logs, mcp__devkit-dev__get_system_jobs, mcp__devkit-dev__get_business_rules, mcp__devkit-dev__get_workflows, mcp__devkit-dev__get_flows, mcp__devkit-dev__get_business_process_flows, mcp__devkit-dev__get_custom_apis, mcp__devkit-dev__get_messages, mcp__devkit-dev__get_audit_history, mcp__devkit-dev__execute_fetchxml, mcp__devkit-dev__search_records, mcp__devkit-dev__parse_record_url, mcp__devkit-dev__whoami, mcp__devkit-dev__manage_form, mcp__devkit-dev__manage_view, mcp__devkit-dev__manage_app, mcp__devkit-dev__manage_choice, mcp__devkit-dev__manage_command, mcp__devkit-dev__manage_ribbon, mcp__devkit-dev__manage_webresource, mcp__devkit-dev__manage_environment_variable, mcp__dataverse-YOUR_ORG__read_query, mcp__dataverse-YOUR_ORG__search, mcp__dataverse-YOUR_ORG__describe, mcp__dataverse-YOUR_ORG__search_data, mcp__dataverse-YOUR_ORG__file_download
 model: sonnet
 ---
 
@@ -41,7 +41,7 @@ nothing can be served.
 ## Dataverse tools (read-only)
 
 Use devkit-dev (`mcp__devkit-dev__*`) first. Fall back to the Dataverse MCP
-(`mcp__dataverse-org76f8db55__*`) only for what devkit doesn't cover: Dataverse
+(`mcp__dataverse-YOUR_ORG__*`) only for what devkit doesn't cover: Dataverse
 SQL (`read_query`) and keyword search over schema (`search`, `describe`).
 
 Use them to compare the change with the forms and views it sits beside,

@@ -17,8 +17,21 @@ Manual install, with every link (base tools, .NET, PAC CLI, DevKit NuGet package
 the `mattpocock-skills` and `dataverse` Claude Code plugins, sign-in, MCP, troubleshooting):
 **[`docs/SETUP.md`](docs/SETUP.md)**.
 
-- Dev: `https://org76f8db55.crm5.dynamics.com`
-- Solution: `AgentFactoryDEV` ("Agent Factory DEV"), publisher prefix `nt`
+**Order: install, validate, then configure.** The repo ships with placeholders, not real values:
+
+| Placeholder | Meaning |
+|---|---|
+| `YOUR_ORG` / `https://YOUR_ORG.crm5.dynamics.com` | your dev environment (first label of the URL) |
+| `YOUR_SOLUTION` / `Your Solution Display Name` | solution unique name and display name |
+| `YOUR_PREFIX` | publisher prefix (2 to 8 lowercase letters) |
+| `YOUR_PLUGINS` | plugin project name |
+
+1. Install the tools and plugins, then validate them: steps 2 to 7 of [`docs/SETUP.md`](docs/SETUP.md).
+2. Only after every check passes, configure your environment (step 8): run `/factory-connect`
+   and enter your dev URL, solution and publisher. It replaces the placeholders everywhere,
+   signs you in and registers the MCP servers.
+
+Until then `/mcp` shows the two servers as failed; that is expected.
 
 Never commit credentials, connection strings or `.env` files.
 

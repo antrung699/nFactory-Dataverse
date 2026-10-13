@@ -9,16 +9,16 @@
         "--auth",
         "Interactive",
         "--url",
-        "https://org76f8db55.crm5.dynamics.com"
+        "https://YOUR_ORG.crm5.dynamics.com"
       ],
       "env": {}
     },
-    "dataverse-org76f8db55": {
+    "dataverse-YOUR_ORG": {
       "type": "stdio",
       "command": "${HOME}/.npm-global/bin/dataverse",
       "args": [
         "mcp",
-        "https://org76f8db55.crm5.dynamics.com"
+        "https://YOUR_ORG.crm5.dynamics.com"
       ],
       "env": {
         "PATH": "${HOME}/.dotnet:${HOME}/.npm-global/bin:/usr/local/bin:/usr/bin:/bin",

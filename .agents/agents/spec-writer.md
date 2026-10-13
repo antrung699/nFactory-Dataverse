@@ -39,7 +39,7 @@ worktree. The job folder is in the main checkout; your one file goes there.
 
 ## Dataverse MCP tools (read-only)
 
-Use the `devkit-dev` MCP server first. Use the `dataverse-org76f8db55` server
+Use the `devkit-dev` MCP server first. Use the `dataverse-YOUR_ORG` server
 only for what devkit doesn't cover.
 
 - devkit-dev: `get_tables`, `get_solution_components`, `get_plugins`,
@@ -50,7 +50,7 @@ only for what devkit doesn't cover.
   `manage_view`, `manage_app`, `manage_choice`, `manage_command`,
   `manage_ribbon`, `manage_webresource`, `manage_environment_variable` with
   `action` `list` or `detail` only (`buttons` for `manage_ribbon`).
-- dataverse-org76f8db55 fallback: `read_query` (Dataverse SQL), `search` and
+- dataverse-YOUR_ORG fallback: `read_query` (Dataverse SQL), `search` and
   `describe` (schema and Custom API keyword search), `search_data`,
   `file_download`.
 - Use no other MCP tool, and never change the environment. Never pass
@@ -189,7 +189,7 @@ The approver escalates to a human when one of these is a product or security dec
 - Prefer the smallest change that fully meets the request. Don't add options,
   fallbacks or "nice to have" extras.
 - Reuse what exists. If the repo already has a pattern for this (a plugin helper, a
-  solution component, naming convention with `nt_` prefix), name it in Context and require it.
+  solution component, naming convention with `YOUR_PREFIX_` prefix), name it in Context and require it.
 - Include the doc updates the change needs (`ANTIGRAVITY.md` / `README.md`) as requirements.
 - Convention notes for a plugin go in `plugins/README.md`, not in `CLAUDE.md` / `ANTIGRAVITY.md`.
 - Use the repo's real validation commands from `ANTIGRAVITY.md` (tests, build, pack) in

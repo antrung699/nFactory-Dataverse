@@ -61,7 +61,7 @@ when they exist):
 - **Publisher**: unique name, display name, prefix (2–8 lowercase letters,
   not `mscrm`) and choice value prefix (10000–99999).
 
-`<org>` below is the first label of the host (`org76f8db55`).
+`<org>` below is the first label of the host (`YOUR_ORG`).
 
 Only dev is ever touched. If the user gives a URL they call test or prod,
 stop: those are human-only.
@@ -162,7 +162,8 @@ sign-in.
    `DATAVERSE_PLUGIN_*` belong to `dv-connect`). If `.env` is missing those,
    run `dataverse:dv-connect` for the Dataverse-only parts and skip its MCP
    step (step 6 already did it).
-2. **Environment switch.** When the URL, solution or prefix differ from what
+2. **Environment switch.** A fresh clone of the template carries the placeholders `YOUR_ORG`,
+   `YOUR_SOLUTION`, `YOUR_PREFIX` and `YOUR_PLUGINS`: treat them as the old values below. When the URL, solution or prefix differ from what
    `CLAUDE.md` says, show the user the list of changes and ask, then:
    - Rename the old `dataverse-<oldorg>` server name to `dataverse-<org>` in
      every file that has it: `grep -rl "dataverse-<oldorg>" --exclude-dir=.git

@@ -61,7 +61,7 @@ The job folder is in the main checkout; your one file goes there.
 
 ## Dataverse MCP tools (read-only)
 
-Use the `devkit-dev` MCP server first. Use the `dataverse-org76f8db55` server
+Use the `devkit-dev` MCP server first. Use the `dataverse-YOUR_ORG` server
 only for what devkit doesn't cover.
 
 - devkit-dev: `get_tables`, `get_solution_components`, `get_plugins`,
@@ -72,7 +72,7 @@ only for what devkit doesn't cover.
   `manage_view`, `manage_app`, `manage_choice`, `manage_command`,
   `manage_ribbon`, `manage_webresource`, `manage_environment_variable` with
   `action` `list` or `detail` only (`buttons` for `manage_ribbon`).
-- dataverse-org76f8db55 fallback: `read_query`, `search`, `describe`,
+- dataverse-YOUR_ORG fallback: `read_query`, `search`, `describe`,
   `search_data`, `file_download`.
 - Use no other MCP tool (in particular not `manage_role`), and never change
   the environment. Never pass `include_config=true` to `get_plugins` or

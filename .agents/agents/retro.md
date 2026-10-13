@@ -39,12 +39,12 @@ the missing rule, check or pointer that let it through is.
      Fix: a navigation pointer.
    - **Automated checks**: a mistake a check could have caught. Read the
      repo's own commands first (`CLAUDE.md` table, `package.json` scripts,
-     `NtPlugins.Tests`, any CI); an existing check that is unwired or broken is
+     `YOUR_PLUGINS.Tests`, any CI); an existing check that is unwired or broken is
      the finding, not a new one. A repo with no guardrail (no pre-commit hook,
      no CI running build/test/lint) is itself a finding.
    - **Coding standards**: a reviewer missed something, or a rule is unclear or
      dead. Mechanical violations (a banned API, a hard-coded GUID or URL, a
-     missing `nt` prefix, a file location) get a deterministic check, not a
+     missing `YOUR_PREFIX` prefix, a file location) get a deterministic check, not a
      rule. Judgement calls go to the reviewer agent that owns them
      (`reviewer-code`, `reviewer-security`, `reviewer-ux`, `reviewer-ui`):
      reviewers carry standards, because the builder has the most context
