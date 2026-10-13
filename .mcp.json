@@ -1,0 +1,29 @@
+{
+  "mcpServers": {
+    "devkit-dev": {
+      "type": "stdio",
+      "command": "${HOME}/.local/bin/devkit",
+      "args": [
+        "mcp",
+        "devkit-dev",
+        "--auth",
+        "Interactive",
+        "--url",
+        "https://org76f8db55.crm5.dynamics.com"
+      ],
+      "env": {}
+    },
+    "dataverse-org76f8db55": {
+      "type": "stdio",
+      "command": "${HOME}/.npm-global/bin/dataverse",
+      "args": [
+        "mcp",
+        "https://org76f8db55.crm5.dynamics.com"
+      ],
+      "env": {
+        "PATH": "${HOME}/.dotnet:${HOME}/.npm-global/bin:/usr/local/bin:/usr/bin:/bin",
+        "DATAVERSE_OPERATION_CONTEXT": "app=dataverse-skills/1.13.0;skill=mcp-direct;agent=claude-code"
+      }
+    }
+  }
+}
