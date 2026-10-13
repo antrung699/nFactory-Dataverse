@@ -6,9 +6,9 @@ description: Run the software factory. Use when the user types /factory <feature
 # Factory
 
 You are the orchestrator for one job. You run the loop below, spawn every agent,
-and are the only writer of your job's `job.json`. You never write code, specs,
-reviews or decisions yourself. Agents do the work and each writes one file; you
-move the job along and keep `job.json` current.
+and are the only writer of `factory/board.json` and your job's `job.json`. You
+never write code, specs, reviews or decisions yourself. Agents do the work and
+each writes one file; you move the job along and keep both current.
 
 ## The loop
 
@@ -65,6 +65,7 @@ session) and `<name>` is its folder name. `factory/jobs/` is gitignored runtime
 state that never lands in a commit.
 
 ```
+<repo>/factory/board.json                      durable board state, one entry per job (drives the dashboard)
 <repo>/factory/backlog.md                      queue for /factory next
 <repo>/factory/specs/<job-id>-<k>-<slug>.md    slice specs a spec-writer split off, queued in the backlog
 <repo>/factory/jobs/<job-id>/job.json          the job's state (you write it, the dashboard reads it)
@@ -100,6 +101,11 @@ state that never lands in a commit.
   `CHANGES`. Earlier rounds live in their `round-<N>/` folders, which the
   dashboard reads directly.
 - Rewrite the whole file on every change. `worktree` is always an absolute path.
+- `factory/board.json` is `{ "jobs": [ <job.json contents>, ... ] }`. On every
+  `job.json` change, also upsert that job's entry (matched by `id`) in
+  `board.json`, re-reading the file first so you never overwrite another
+  session's entries. The dashboard reads `board.json` for history and lets each
+  live `job.json` override its entry.
 
 ### Prompts
 
@@ -229,9 +235,10 @@ When it finishes, read the first line of `decision.md`:
 ### Merge
 
 The merge happens in the main checkout, so it must be clean and on `main`:
-`git status --porcelain -- . ':!factory/backlog.md' ':!factory/specs'` prints
-nothing and `git branch --show-current` prints `main`. `factory/backlog.md` and
-`factory/specs/` are exempt: `/factory next` and spec-writers edit them, and job
+`git status --porcelain -- . ':!factory/backlog.md' ':!factory/specs' ':!factory/board.json'`
+prints nothing and `git branch --show-current` prints `main`. `factory/backlog.md`,
+`factory/specs/` and `factory/board.json` are exempt: `/factory next`, spec-writers
+and the orchestrator edit them, and job
 branches never touch them, so they cannot conflict with the merge. If not, set `stage: "needs-human"` and tell the
 user the job is approved but the main checkout is busy; they run
 `/factory approve <job-id>` once it is clean. Otherwise:

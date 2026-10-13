@@ -211,7 +211,7 @@ Read the first line of `<job folder>/build.md`:
 ### Merge
 
 1. Verify the main checkout is clean and on `main`:
-   `git status --porcelain -- . ':!factory/backlog.md' ':!factory/specs'` is empty and `git branch --show-current` is `main`.
+   `git status --porcelain -- . ':!factory/backlog.md' ':!factory/specs' ':!factory/board.json'` is empty and `git branch --show-current` is `main`.
 2. If main checkout is dirty or on another branch, set `stage: "needs-human"` and notify the user to run `/factory approve <job-id>` once clean.
 3. Otherwise, merge and clean up:
    ```bash
